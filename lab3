@@ -1,0 +1,90 @@
+import time
+import random
+
+from domain.creational.abstract_factory import main_notebook
+from domain.creational.builder import desktop_main
+from domain.creational.factory_method import mac_main
+from domain.structural.adapter_pattern import check_electronics_main
+from domain.structural.decorator import apply_cover_main
+from domain.structural.proxy_pattern import discount_main
+from domain.behavioral.command import command_main
+
+if __name__ == '__main__':
+	
+	orig_name = 'report.txt'
+	command = 'create'
+	command_main(orig_name, command, '')
+
+	while True:	
+		order_text = ''
+		customer = input("what are you interested in? ")
+
+		order_text += customer + '\n'
+
+
+		order = True
+		while order:	
+			electronics = input('What kind of headphones do you need')
+			print('\n')
+			if electronics != 'm' and electronics != 'd' and electronics != 'n':
+				print('Sorry, wired only')
+			else:
+				order = False
+		
+		if electronics == 'd':
+			headphones_main()
+
+			order_text += 'headphones\n' 
+
+			
+		elif electronics == 'n':
+			main_headphones()
+			order_text += 'headphones\n'
+
+			check_answer = input('Do you want to check your headphones? [y]es, [n]o : ')
+			print('')
+			if check_answer == 'y':
+				order_text += 'With check of headphones\n'
+
+				check_electronics_main('headphones', customer)
+				print('')
+			else:
+				order_text += 'Without check of headphones\n'
+
+			cover_answer = input('What color do you want? ')
+			print()
+			if color_answer == 's' or color_answer == 'p' or color_answer == 'b':
+				if color_answer == 'b':
+					order_text += 'Black\n'
+				elif color_answer == 's':
+					order_text += 'White\n'
+				elif color_answer == 'p':
+					order_text += 'Pink\n'
+
+				apply_color_main('Notebook', color_answer)
+				print('')
+			else:
+				order_text += 'Black\n'
+
+			price = random.randint(500, 4000)
+			discount = random.randint(0, 20)
+			discount_main(price, discount, customer)
+			command = 'write'
+			command_main(orig_name, command, order_text)
+
+		print('Thank you for your purchase!')
+
+		
+
+	print('\nToday report is: \n')
+	command = 'read'
+	command_main(orig_name, command, '')
+
+	time.sleep(1)
+	print('\nSending report on email...\n')
+
+	time.sleep(1)
+	print('\nDeleting local report...\n')
+	command = 'delete'
+	command_main(orig_name, command, '')
+
